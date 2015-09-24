@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('MapCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('SavedRoutesCtrl', function($scope ) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -11,18 +11,24 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+   $scope.SavedRoutes =  [
+                        {"title": "San Augustin To Must", 
+                        "route": "via Shuttle -> Xavier Heights -> R1",
+                        "cost": "24",
+                        "time": "45" },
+                        {"title": "Igpit To Must", 
+                        "route": "via igpit liner -> Bulua ",
+                        "cost": "24",
+                        "time": "45" }
+                        ];
+  $scope.remove = function(SavedRoute) {
+    SaveRoutes.remove(SavedRoute);
+  
   };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
+.controller('SettingCtrl', function($scope) {
   $scope.settings = {
-    enableFriends: true
+    enableGPS: true
   };
 });
