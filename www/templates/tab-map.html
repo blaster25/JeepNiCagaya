@@ -1,7 +1,15 @@
-<ion-view view-title="JeepNiCagayan">
+<!--
+
+ notes: 
+ jebb 10/02/15 - No need na man diay mag add ug ng-ctrl dri xD we have the router :3 wew.
+
+
+
+-->
+<ion-view view-title="JeepNiCagayan ">
   <ion-content class="padding">
-    <!-- <div ng-controller="MapCtrl"> -->
-     <div role="main" id="map">
-    <!-- </div> -->
+  	Current position {{myLoc.H}}, {{myLoc.L}}
+  	<div class="mapBtn"><button class="button icon ion-android-locate button-small" ng-click="homeGPS()"></button></div>
+     <div role="main" id="map" data-tap-disabled="true"></div>
   </ion-content>
 </ion-view>
