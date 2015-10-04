@@ -1,0 +1,7 @@
+Errors/Issues and Fixes
+
+Error 	-> Connection to server was unsuccessful to “www/assets/index.html” 
+FIX 	-> https://www.robertkehoe.com/2013/01/fix-for-phonegap-connection-to-server-was-unsuccessful/
+
+Issue 	-> Geolocation service not working on real device
+FIX 	-> document.addEventListener("deviceready", onDeviceReady, false);
