@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #map {
   width: 100%;
   height: 100%;
@@ -26,4 +27,25 @@
 	z-index: 3;
 	background-color: black;
 	color: green;
+=======
+#map {
+  width: 100%;
+  height: 100%;
+
+}
+
+.scroll {
+  height: 100%;
+}
+
+.larger {
+    font-size: larger;
+}
+
+.mapBtn{
+	position: absolute;
+	left: 10px;
+	top: 30px;
+	z-index: 2;
+>>>>>>> origin/master
 }
