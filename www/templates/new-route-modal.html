@@ -1,0 +1,31 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">New Route</h1>
+    <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="list">
+      <label class="item item-input">
+        <span class="input-label">Start</span>
+        <input ng-model="modalParams.routeStart" type="text">
+        
+      </label>
+      <label class="item item-input">
+        <span class="input-label">End</span>
+        <input ng-model="modalParams.routeEnd" type="text">
+        
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Route</span>
+        <input ng-model="modalParams.routePath" type="text">
+       
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Fare</span>
+        <input ng-model="modalParams.routeFare" type="text">
+     
+      </label>
+      <button class="button button-full button-positive" ng-click="insertRoute()">Save Route</button>
+    </div>
+  </ion-content>
+</ion-modal-view>

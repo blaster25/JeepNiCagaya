@@ -1,16 +1,21 @@
 <ion-view view-title="Saved Routes">
   <ion-content>
+    <button class="button icon-left ion-android-add-circle button-positive" ng-click="modal.show()" >Add New Route</button>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="SavedRoute in SavedRoutes" type="item-text-wrap" >
         
-        <h2>{{SavedRoute.title}}</h2>
-        <p>{{SavedRoute.route}}</p>
+        <h2>Start: {{SavedRoute.start}}</h2>
+        <h2>End: {{SavedRoute.end}}</h2>
+        <h3>Rout: {{SavedRoute.route}}</h3>
+        <cite>Fare: {{SavedRoute.fare}}</cite>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
-        <ion-option-button class="button-assertive" ng-click="remove(SavedRoute)">
+        <ion-option-button class="button-assertive" ng-click="removeRoute(SavedRoute.id, $index)">
           Delete
         </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
+
+

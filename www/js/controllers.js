@@ -45,28 +45,65 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SavedRoutesCtrl', function($scope ) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-   $scope.testVar = "WORKS";
-   $scope.SavedRoutes =  [
-                        {"title": "San Augustin To Must", 
-                        "route": "via Shuttle -> Xavier Heights -> R1",
-                        "cost": "24",
-                        "time": "45" },
-                        {"title": "Igpit To Must", 
-                        "route": "via igpit liner -> Bulua ",
-                        "cost": "24",
-                        "time": "45" }
-                        ];
-  $scope.remove = function(SavedRoute) {
-    SaveRoutes.remove(SavedRoute);
+.controller('SavedRoutesCtrl', function($scope, $ionicModal, $http, savedRoutesFactory ) {
+
+  $scope.modalParams = {};
+
+  $scope.clearModalParams = function clearModalParams () {
+    $scope.modalParams.routeStart = "";
+    $scope.modalParams.routeEnd = "";
+    $scope.modalParams.routePath = "";
+    $scope.modalParams.routeFare = "";
+  }
+
+
+  // modal form for save routes
+  $ionicModal.fromTemplateUrl( 'templates/new-route-modal.html' , {
+    scope: $scope
+  }).then( function( modal ) {
+    $scope.modal = modal;
+  });
+
+  // api Getting all the saved route 
+  savedRoutesFactory.getRoutes()
+    .success(function (response) {
+      $scope.SavedRoutes = response;
+    })
+    .error(function (error) {
+      $scope.status = 'Unable to load customer data: ' + error.message;
+    });
+
+  // api insert new route 
+  $scope.insertRoute = function insertRoute () {
+    var routeData = {
+      "start": $scope.modalParams.routeStart,
+      "end": $scope.modalParams.routeEnd,
+      "route":$scope.modalParams.routePath,
+      "fare": $scope.modalParams.routeFare
+    }
+    var newRoute = {"saved_route": routeData };
+
+    savedRoutesFactory.saveNewRoute(newRoute)
+      .success(function () {
+        alert('Save new route !');
+        $scope.SavedRoutes.push(routeData);
+      })
+      .error(function(error) {
+        alert('Unable to save route: ' + error.message);
+      });
+    $scope.clearModalParams();
+    $scope.modal.hide();
+  };
   
+  // api delete route
+  $scope.removeRoute = function(id, index) {
+    savedRoutesFactory.deleteRoute(id)
+      .success(function () {
+            $scope.SavedRoutes.splice(index, 1);
+        })
+      .error(function (error) {
+        alert('Unable to delete route: ' + error.message);
+      });
   };
 })
 
