@@ -48,14 +48,16 @@ angular.module('starter.controllers', [])
 .controller('SavedRoutesCtrl', function($scope, $ionicModal, $http, savedRoutesFactory ) {
 
   $scope.modalParams = {};
-
-  $scope.clearModalParams = function clearModalParams () {
+  $scope.updateIndex = null;
+  $scope.clearData = function () {
     $scope.modalParams.routeStart = "";
     $scope.modalParams.routeEnd = "";
     $scope.modalParams.routePath = "";
     $scope.modalParams.routeFare = "";
+    $scope.routeID = "";
+    $scope.updateIndex = null;
+    $scope.modal.hide();
   }
-
 
   // modal form for save routes
   $ionicModal.fromTemplateUrl( 'templates/new-route-modal.html' , {
@@ -75,24 +77,22 @@ angular.module('starter.controllers', [])
 
   // api insert new route 
   $scope.insertRoute = function insertRoute () {
-    var routeData = {
+    this.routeData = {
       "start": $scope.modalParams.routeStart,
       "end": $scope.modalParams.routeEnd,
       "route":$scope.modalParams.routePath,
       "fare": $scope.modalParams.routeFare
-    }
-    var newRoute = {"saved_route": routeData };
-
-    savedRoutesFactory.saveNewRoute(newRoute)
-      .success(function () {
+    };
+    this.newRouteData = {"saved_route": this.routeData };
+    savedRoutesFactory.saveNewRoute(this.newRouteData)
+      .success(function (response) {
         alert('Save new route !');
-        $scope.SavedRoutes.push(routeData);
+        $scope.SavedRoutes.push(response);
+        $scope.clearData();
       })
       .error(function(error) {
         alert('Unable to save route: ' + error.message);
       });
-    $scope.clearModalParams();
-    $scope.modal.hide();
   };
   
   // api delete route
@@ -102,12 +102,57 @@ angular.module('starter.controllers', [])
             $scope.SavedRoutes.splice(index, 1);
         })
       .error(function (error) {
-        alert('Unable to delete route: ' + error.message);
+        alert('Unable to delete route: ' + error.message + " Please notify the devs");
       });
   };
+
+  // showing route profile to modal (optional)
+  $scope.editRoute = function ( index ) {
+    $scope.modalParams.routeStart = $scope.SavedRoutes[index].start;
+    $scope.modalParams.routeEnd = $scope.SavedRoutes[index].end;
+    $scope.modalParams.routePath = $scope.SavedRoutes[index].route;
+    $scope.modalParams.routeFare = $scope.SavedRoutes[index].fare;
+    $scope.routeID = $scope.SavedRoutes[index].id;
+    $scope.updateIndex = index;
+    $scope.modal.show();
+  };
+
+  // update the route view
+  $scope.refreshRoute = function ( index ) {
+    $scope.SavedRoutes[index].start = $scope.modalParams.routeStart;
+    $scope.SavedRoutes[index].end = $scope.modalParams.routeEnd;
+    $scope.SavedRoutes[index].route = $scope.modalParams.routePath;
+    $scope.SavedRoutes[index].fare = $scope.modalParams.routeFare;
+    $scope.SavedRoutes[index].id = $scope.routeID;
+  };
+
+  // api for update (optional)
+  $scope.changeRoute = function ( ) {
+    if ( $scope.updateIndex != null ) {
+      this.routeData = {
+        "start": $scope.modalParams.routeStart,
+        "end": $scope.modalParams.routeEnd,
+        "route":$scope.modalParams.routePath,
+        "fare": $scope.modalParams.routeFare
+      };
+      this.newRouteData = {"saved_route": this.routeData };
+      savedRoutesFactory.updateRoute( $scope.routeID , this.newRouteData )
+        .success(function () {
+            alert("Route has been chaged");
+            $scope.refreshRoute($scope.updateIndex);
+            $scope.clearData();
+         })
+        .error(function ( error ) {
+            alert('Unable to update route: ' + error.message);
+        });
+    } else {
+      alert("Unable to update: no data has been set");
+    }
+  };
+
 })
 
-.controller('SettingCtrl', function($scope) {
+.controller('SettingCtrl', function( $scope ) {
   $scope.settings = {
     enableGPS: true
   };

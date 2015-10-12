@@ -7,25 +7,26 @@
     <div class="list">
       <label class="item item-input">
         <span class="input-label">Start</span>
-        <input ng-model="modalParams.routeStart" type="text">
+        <input ng-model="modalParams.routeStart" type="text" required>
         
       </label>
       <label class="item item-input">
         <span class="input-label">End</span>
-        <input ng-model="modalParams.routeEnd" type="text">
+        <input ng-model="modalParams.routeEnd" type="text" required>
         
       </label>
       <label class="item item-input">
         <span class="input-label">Route</span>
-        <input ng-model="modalParams.routePath" type="text">
+        <input ng-model="modalParams.routePath" type="text" required>
        
       </label>
       <label class="item item-input">
         <span class="input-label">Fare</span>
-        <input ng-model="modalParams.routeFare" type="text">
+        <input ng-model="modalParams.routeFare" type="number" required>
      
       </label>
-      <button class="button button-full button-positive" ng-click="insertRoute()">Save Route</button>
+      <button type="submit" class="button button-full button-positive" ng-click="insertRoute()">Save Route</button>
+      <button class="button button-full button-positive" ng-click="changeRoute($index)">update Route</button>
     </div>
   </ion-content>
 </ion-modal-view>
