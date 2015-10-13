@@ -1,8 +1,10 @@
-angular.module('starter.services', [])
+// angular.module('starter.services', [])
+angular.module('jeepnicagayan.services', [])
 
   .factory('savedRoutesFactory', function( $http ) {
-      var endPoint = "http://localhost:3000/saved_routes"
-
+      // var endPoint = "http://localhost:3000/saved_routes" // for local
+      var endPoint = "https://jeepnicagayan.herokuapp.com/saved_routes" // for remote
+      
       var factory = {};
 
       factory.getRoutes = function ( ) {

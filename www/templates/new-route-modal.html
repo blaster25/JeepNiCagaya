@@ -1,32 +1,28 @@
 <ion-modal-view>
   <ion-header-bar class="bar bar-header bar-positive">
     <h1 class="title">New Route</h1>
-    <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    <button class="button button-clear button-primary" ng-click="modal.hide( )">Cancel</button>
   </ion-header-bar>
   <ion-content class="padding">
     <div class="list">
-      <label class="item item-input">
+      <label class="item item-input item-stacked-label">
         <span class="input-label">Start</span>
         <input ng-model="modalParams.routeStart" type="text" required>
-        
       </label>
-      <label class="item item-input">
+      <label class="item item-input item-stacked-label">
         <span class="input-label">End</span>
         <input ng-model="modalParams.routeEnd" type="text" required>
-        
       </label>
-      <label class="item item-input">
+      <label class="item item-input item-stacked-label">
         <span class="input-label">Route</span>
         <input ng-model="modalParams.routePath" type="text" required>
-       
       </label>
-      <label class="item item-input">
+      <label class="item item-input item-stacked-label">
         <span class="input-label">Fare</span>
         <input ng-model="modalParams.routeFare" type="number" required>
-     
       </label>
-      <button type="submit" class="button button-full button-positive" ng-click="insertRoute()">Save Route</button>
-      <button class="button button-full button-positive" ng-click="changeRoute($index)">update Route</button>
+      <button type="submit" class="button button-full button-positive" ng-hide="isUpdate" ng-click="insertRoute( )">Save Route</button>
+      <button class="button button-full button-positive" ng-show="isUpdate" ng-click="changeRoute( $index )">update Route</button>
     </div>
   </ion-content>
 </ion-modal-view>
